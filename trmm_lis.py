@@ -14,20 +14,18 @@ import matplotlib.ticker as mticker
 from s3_read import s3_read
 
 class trmm_lis:
-    def __init__(self, file_path ,store_directory):
+    def __init__(self, file_path ,store_directory, var):
         self.paths = file_path
         self.directory = store_directory
+        self.var = var
         self.generate_cog()
 
     def generate_cog(self):
         for path in self.paths:
             print("Starting File: " + path + " ....", end="")
             file = xa.open_dataset(path, engine='netcdf4', decode_coords='all')
-            print("Error here")
-            var = f'{path[4:9].upper()}_LIS_FRD'
-            flash_rate_ds = file[var]
-
-            if var == 'VHRFC_LIS_FRD':
+            flash_rate_ds = file[self.var]
+            if self.var == 'VHRFC_LIS_FRD':
                 grid = flash_rate_ds[::-1] # Orientation is flipped to the correct position
                 rows = grid.to_numpy()[:, :] == 0.
                 grid.to_numpy()[rows] = None
@@ -36,8 +34,8 @@ class trmm_lis:
                 grid.rio.crs
                 grid.rio.set_crs('epsg:4326')
 
-                cog_name = f'{var}_co.tif'
-                cog_path = f"{self.store_directory}/{cog_name}"
+                cog_name = f'{self.var}_co.tif'
+                cog_path = f"{self.directory}/{cog_name}"
                 grid.rio.to_raster(rf'{cog_path}', driver='COG')
             else:
                 ds_type = flash_rate_ds.dims[0]
@@ -52,8 +50,8 @@ class trmm_lis:
                     grid.rio.crs
                     grid.rio.set_crs('epsg:4326')
 
-                    cog_name = f'{var}_{ds_type}_{grid_index}_co.tif'
-                    cog_path = cog_path = f"{self.store_directory}/{cog_name}"
+                    cog_name = f'{self.var}_{ds_type}_{grid_index}_co.tif'
+                    cog_path = cog_path = f"{self.directory}/{cog_name}"
                     grid.rio.to_raster(rf'{cog_path}', driver='COG')
             print("Complete!!")
 

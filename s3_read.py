@@ -1,3 +1,5 @@
+## file not used anymore
+
 import boto3
 import os
 from dotenv import load_dotenv

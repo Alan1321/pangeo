@@ -31,10 +31,10 @@ class isslis:
     def generate_cog(self):
         for fileName in self.paths:
             #global lat_len, lon_len, npData, lat, lon, files
-            f2_var = 'lightning_area_density_index'
+            #f2_var = 'lightning_area_density_index'
             file2 = xa.open_dataset(fileName, engine='netcdf4', decode_coords='all', decode_times=False)
             try:
-                grid = file2.lightning_area_density_index
+                grid = file2[self.var]
             except:
                 print("Variable not found!!")
                 return
@@ -78,7 +78,7 @@ class isslis:
             finalFile.rio.set_crs('epsg:4326', inplace=True) 
 
             cog_name = f'{fileName[-38:-3]}.tif'
-            cog_path = f'/home/asubedi/Desktop/pangeo/cog/{cog_name}'
+            cog_path = f'{self.directory}{cog_name}'
             finalFile.rio.to_raster(rf'{cog_path}', driver='COG')
 
     def get_lat_index(self, lat_value):

@@ -21,8 +21,8 @@ class hs3:
     def __init__(self, file_path ,store_directory, var, type):
         self.path = file_path
         self.directory = store_directory
-        #self.var = var
-        self.var = 'Subset_Of_Stations'
+        self.var = var
+        #self.var = 'Subset_Of_Stations'
         self.type = type
         self.generate_cog()
 
@@ -103,7 +103,7 @@ class hs3:
                 new_xarray.rio.set_crs('epsg:4326', inplace=True)
 
                 print(path)
-                cog_path = f'/home/asubedi/Desktop/pangeo/cog/{path[35:len(path)]}.tif'
+                cog_path = f'{self.directory}{path[35:len(path)]}.tif'
                 print(cog_path)
                 new_xarray.rio.to_raster(rf'{cog_path}', driver='COG')
 

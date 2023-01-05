@@ -31,7 +31,7 @@ class hs3:
             try:
                 start_time = time.time()
                 print("---------------------------------------------------------------------------------------------------")
-                print(f"Starting file: {path[-30:-1]}")
+                print(f"Starting file: {path[35:len(path)]}")
                 #open file here
                 file1 = xa.open_dataset(path, engine='netcdf4', decode_coords='all', decode_times=False)
 

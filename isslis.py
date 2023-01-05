@@ -1,4 +1,4 @@
-#fix var name
+#fix var name, output path
 import os
 import requests
 import gzip

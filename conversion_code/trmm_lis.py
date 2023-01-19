@@ -5,7 +5,7 @@ import s3fs
 ##
 from s3_read import s3_read
 
-class trmm_lis:
+class TrmmLisRecipe:
     def __init__(self, file_path ,store_directory, var):
         self.paths = file_path
         self.directory = store_directory

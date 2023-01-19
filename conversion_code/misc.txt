@@ -1,0 +1,33 @@
+#Main.py
+# load_dotenv()
+# BASE_PATH = os.getenv('BASE_PATH')
+
+# trmm_lis_full = local_read("/home/asubedi/Desktop/raw-files/TRMM-LIS/FULL/").get_files()
+# trmm_lis_monthly = local_read("/home/asubedi/Desktop/raw-files/TRMM-LIS/MONTHLY/").get_files()
+
+# trmm_lis(trmm_lis_full, "/home/asubedi/Desktop/pangeo/cog/", "VHRFC_LIS_FRD")
+# trmm_lis(trmm_lis_monthly, "/home/asubedi/Desktop/pangeo/cog/", "VHRMC_LIS_FRD")
+
+# otd_monthly = local_read("/home/asubedi/Desktop/raw-files/OTD/FULL/").get_files()
+# otd(otd_monthly, "/home/asubedi/Desktop/pangeo/cog/", "HRFC_COM_FR", "Full")
+
+# isslis_cog = local_read("/home/asubedi/Desktop/raw-files/ISSLIS/Spring2022/").get_files()
+# isslis(isslis_cog, "/home/asubedi/Desktop/pangeo/cog/", "HRFC_COM_FR", "Full")
+
+###################
+
+import xarray as xr
+import s3fs
+
+path="s3://lightning-dashboard-raw-files/TRMM-LIS/lis_vhrfc_1998_2013_v01.nc"
+#path="https://www.unidata.ucar.edu/software/netcdf/examples/sresa1b_ncar_ccsm3-example.nc"
+
+fs = s3fs.S3FileSystem(anon=False)
+with fs.open(path) as crsfile:
+    # if okay, proceed to the necessary data
+    DS = xr.open_dataset(crsfile) 
+    print(DS)
+    # file = xr.open_dataset(path, engine='netcdf4', decode_coords='all')
+
+###################
+

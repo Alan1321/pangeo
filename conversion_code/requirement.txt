@@ -1,0 +1,6 @@
+xarray -- //pip install xarray
+conda
+cartopy -- //conda install -c conda-forge cartopy
+dotenv -- //pip install python-dotenv
+boto3 -- //pip install boto3
+pynio -- //used only for hdf4 datasets
